@@ -8,32 +8,40 @@ import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/cards/QuestionCard";
 
-const questions: any = [
+const questions = [
   {
-    _id: 1,
+    _id: "1",
     title: "How to use React Query?",
     tags: [
-      { _id: 1, name: "react-query" },
-      { _id: 2, name: "react" },
+      { _id: "1", name: "react-query" },
+      { _id: "2", name: "react" },
     ],
-    author: "John Doe",
-    upvotes: 10,
-    answers: 5,
-    views: 100,
-    createdAt: "2021-09-01T12:00:00.000Z",
+    author: {
+      _id: "abc123",
+      name: "John Doe",
+      picture: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    upvotes: Math.floor(Math.random() * 100),
+    answers: [{ text: "Answer 1" }, { text: "Answer 2" }],
+    views: Math.floor(Math.random() * 1000),
+    createdAt: new Date("2021-09-01T12:00:00.000Z"),
   },
   {
-    _id: 2,
-    title: "How to use React Query?",
+    _id: "2",
+    title: "How to use React Context?",
     tags: [
-      { _id: 1, name: "react-query" },
-      { _id: 2, name: "react" },
+      { _id: "3", name: "react-context" },
+      { _id: "2", name: "react" },
     ],
-    author: "John Doe",
-    upvotes: 10,
-    answers: 5,
-    views: 100,
-    createdAt: "2021-09-01T12:00:00.000Z",
+    author: {
+      _id: "def456",
+      name: "Jane Doe",
+      picture: "https://randomuser.me/api/portraits/women/15.jpg",
+    },
+    upvotes: Math.floor(Math.random() * 100),
+    answers: [{ text: "Answer 1" }, { text: "Answer 2" }, { text: "Answer 3" }],
+    views: Math.floor(Math.random() * 1000),
+    createdAt: new Date("2021-10-01T12:00:00.000Z"),
   },
 ];
 
@@ -63,7 +71,19 @@ export default function Home() {
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
         {questions?.length > 0 ? (
-          questions?.map((question: any) => <QuestionCard key={question._id} />)
+          questions?.map((question: any) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              answers={question.answers}
+              views={question.views}
+              createdAt={question.createdAt}
+            />
+          ))
         ) : (
           <NoResult
             title="There are no questions to show"
