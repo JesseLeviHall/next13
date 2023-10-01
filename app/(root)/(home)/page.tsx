@@ -5,6 +5,37 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
+import NoResult from "@/components/shared/NoResult";
+import QuestionCard from "@/components/cards/QuestionCard";
+
+const questions: any = [
+  {
+    _id: 1,
+    title: "How to use React Query?",
+    tags: [
+      { _id: 1, name: "react-query" },
+      { _id: 2, name: "react" },
+    ],
+    author: "John Doe",
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: "2021-09-01T12:00:00.000Z",
+  },
+  {
+    _id: 2,
+    title: "How to use React Query?",
+    tags: [
+      { _id: 1, name: "react-query" },
+      { _id: 2, name: "react" },
+    ],
+    author: "John Doe",
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: "2021-09-01T12:00:00.000Z",
+  },
+];
 
 export default function Home() {
   return (
@@ -30,6 +61,18 @@ export default function Home() {
         />
       </div>
       <HomeFilters />
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions?.length > 0 ? (
+          questions?.map((question: any) => <QuestionCard key={question._id} />)
+        ) : (
+          <NoResult
+            title="There are no questions to show"
+            description="  Be the first to break the silence! Ask a question and kickstart the discussion."
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 }
