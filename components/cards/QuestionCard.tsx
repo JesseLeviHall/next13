@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
+import { getTimestamp, abbreviateNumber } from "@/lib/utils";
 
 interface QuestionProps {
   _id: string;
@@ -19,7 +20,9 @@ const QuestionCard = ({ _id, title, tags, author, upvotes, answers, views, creat
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11 ">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
-          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">{String(createdAt)}</span>
+          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
+            {getTimestamp(createdAt)}
+          </span>
           <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">{title}</h3>
           </Link>
@@ -36,7 +39,7 @@ const QuestionCard = ({ _id, title, tags, author, upvotes, answers, views, creat
           imgUrl="/assets/icons/avatar.svg"
           alt="user"
           value={author.name}
-          title=" - asked 1 hour ago"
+          title={` - asked ${getTimestamp(createdAt)}`}
           href={`/profile/${author._id}`}
           isAuthor
           textStyels="body-medium text-dark400_light700"
@@ -44,21 +47,21 @@ const QuestionCard = ({ _id, title, tags, author, upvotes, answers, views, creat
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={upvotes}
+          value={abbreviateNumber(upvotes)}
           title=" Votes"
           textStyels="small-medium text-dark400_light800"
         />
         <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
-          value={answers.length}
+          value={abbreviateNumber(answers.length)}
           title=" Answers"
           textStyels="small-medium text-dark400_light800"
         />
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
-          value={views}
+          value={abbreviateNumber(views)}
           title=" Views"
           textStyels="small-medium text-dark400_light800"
         />
