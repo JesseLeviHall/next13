@@ -21,10 +21,10 @@ const questions = [
       name: "John Doe",
       picture: "https://randomuser.me/api/portraits/men/32.jpg",
     },
-    upvotes: Math.floor(Math.random() * 100),
+    upvotes: Math.floor(Math.random() * 10000),
     answers: [{ text: "Answer 1" }, { text: "Answer 2" }],
-    views: Math.floor(Math.random() * 1000),
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
+    views: Math.floor(Math.random() * 100000),
+    createdAt: new Date("2023-09-01T12:00:00.000Z"),
   },
   {
     _id: "2",
@@ -41,7 +41,7 @@ const questions = [
     upvotes: Math.floor(Math.random() * 100),
     answers: [{ text: "Answer 1" }, { text: "Answer 2" }, { text: "Answer 3" }],
     views: Math.floor(Math.random() * 1000),
-    createdAt: new Date("2021-10-01T12:00:00.000Z"),
+    createdAt: new Date("2023-10-01T12:00:00.000Z"),
   },
 ];
 
