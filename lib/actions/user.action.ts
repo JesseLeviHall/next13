@@ -47,6 +47,7 @@ export const deleteUser = async (params: DeleteUserParams) => {
       throw new Error("User not found");
     }
     const userQuestionIds = await Question.find({ author: user._id }).distinct("_id");
+    console.log(userQuestionIds);
     await Question.deleteMany({ author: user._id });
     // TODO: delete user's answers comments etc
     const deletedUser = await User.findByIdAndDelete(user._id);
