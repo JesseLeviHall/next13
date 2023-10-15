@@ -11,11 +11,17 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useRouter, usePathname } from "next/navigation";
 
 const type: any = "create";
+interface Props {
+  mongoUserId: string;
+}
 
-const Question = () => {
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 1. Define your form.
@@ -32,7 +38,14 @@ const Question = () => {
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
     try {
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
