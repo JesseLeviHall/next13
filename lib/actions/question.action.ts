@@ -5,6 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
 import { CreateQuestionParams, GetQuestionsParams } from "./shared";
 import User from "@/database/user.model";
+import { revalidatePath } from "next/cache";
 
 /* 
 this is a template for creating a new action:
@@ -26,7 +27,6 @@ export const createQuestion = async (params: CreateQuestionParams) => {
       title,
       content,
       author,
-      path,
     });
     const tagDocuments = [];
     for (const tag of tags) {
@@ -38,6 +38,7 @@ export const createQuestion = async (params: CreateQuestionParams) => {
       tagDocuments.push(existingTag._id);
     }
     await Question.findByIdAndUpdate(question._id, { $push: { tags: { $each: tagDocuments } } });
+    revalidatePath(path);
   } catch (error) {
     // error handling
   }
@@ -48,7 +49,8 @@ export const getQuestions = async (params: GetQuestionsParams) => {
     connectToDatabase();
     const questions = await Question.find({})
       .populate({ path: "tags", model: Tag })
-      .populate({ path: "author", model: User });
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
     return { questions };
   } catch (error) {
     console.log(error);
