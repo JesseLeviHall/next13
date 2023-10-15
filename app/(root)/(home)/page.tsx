@@ -10,8 +10,8 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import { getQuestions } from "@/lib/actions/question.action";
 
 export default async function Home() {
-  const result = await getQuestions({});
-  console.log(result?.questions);
+  const { questions = [] } = (await getQuestions({})) ?? {};
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center ">
@@ -36,8 +36,8 @@ export default async function Home() {
       </div>
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result?.questions.length > 0 ? (
-          result?.questions.map((question: any) => (
+        {questions.length > 0 ? (
+          questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
