@@ -7,45 +7,11 @@ import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/cards/QuestionCard";
+import { getQuestions } from "@/lib/actions/question.action";
 
-const questions = [
-  {
-    _id: "1",
-    title: "How to use React Query?",
-    tags: [
-      { _id: "1", name: "react-query" },
-      { _id: "2", name: "react" },
-    ],
-    author: {
-      _id: "abc123",
-      name: "John Doe",
-      picture: "https://randomuser.me/api/portraits/men/32.jpg",
-    },
-    upvotes: Math.floor(Math.random() * 10000),
-    answers: [{ text: "Answer 1" }, { text: "Answer 2" }],
-    views: Math.floor(Math.random() * 100000),
-    createdAt: new Date("2023-09-01T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "How to use React Context?",
-    tags: [
-      { _id: "3", name: "react-context" },
-      { _id: "2", name: "react" },
-    ],
-    author: {
-      _id: "def456",
-      name: "Jane Doe",
-      picture: "https://randomuser.me/api/portraits/women/15.jpg",
-    },
-    upvotes: Math.floor(Math.random() * 100),
-    answers: [{ text: "Answer 1" }, { text: "Answer 2" }, { text: "Answer 3" }],
-    views: Math.floor(Math.random() * 1000),
-    createdAt: new Date("2023-10-01T12:00:00.000Z"),
-  },
-];
-
-export default function Home() {
+export default async function Home() {
+  const result = await getQuestions({});
+  console.log(result?.questions);
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center ">
@@ -70,8 +36,8 @@ export default function Home() {
       </div>
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions?.length > 0 ? (
-          questions?.map((question: any) => (
+        {result?.questions.length > 0 ? (
+          result?.questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
