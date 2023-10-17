@@ -61,8 +61,8 @@ export const getAllUsers = async (params: GetAllUsersParams) => {
   try {
     connectToDatabase();
     // const { page = 1, pageSize = 20, filter, searchQuery } = params;
-    // @ts-ignore
-    const users = (await User.find({})).sort({ createdAt: -1 });
+
+    const users = await User.find({}).sort({ createdAt: -1 });
     return { users };
   } catch (error) {
     console.log(error);
