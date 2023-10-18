@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { useRouter, usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 const type: any = "create";
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const Question = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -149,11 +151,13 @@ const Question = ({ mongoUserId }: Props) => {
                       "bold italic forecolor | alignleft aligncenter " +
                       "alignright alignjustify | bullist numlist ",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Introduce the problem and expand on what yiou put in the title. Minimum 20 characters.
+                Introduce the problem and expand on what you put in the title. Minimum 20 characters.
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
