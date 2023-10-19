@@ -10,6 +10,7 @@ import Answer from "@/components/cards/forms/Answer";
 import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
 import AllAnswers from "@/components/shared/AllAnswers";
+import Votes from "@/components/shared/Votes";
 
 const Page = async ({ params }: any) => {
   const { userId: clerkId } = auth();
@@ -34,7 +35,18 @@ const Page = async ({ params }: any) => {
             />
             <p className="paragraph-semibold text-dark300_light700">{result?.question.author.name}</p>
           </Link>
-          <div className="flex justify-end">VOTING</div>
+          <div className="flex justify-end">
+            <Votes
+              userId={JSON.stringify(mongoUser._id)}
+              type="question"
+              itemId={JSON.stringify(result?.question._id)}
+              upvotes={result?.question.upvotes.length}
+              hasupVoted={result?.question.upvotes.includes(mongoUser._id)}
+              downvotes={result?.question.downvotes.length}
+              hasdownVoted={result?.question.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result?.question._id)}
+            />
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">{result?.question.title}</h2>
       </div>
