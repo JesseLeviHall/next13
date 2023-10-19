@@ -152,7 +152,7 @@ const Question = ({ mongoUserId }: Props) => {
                       "alignright alignjustify | bullist numlist ",
                     content_style: "body { font-family:Inter; font-size:16px }",
                     skin: mode === "dark" ? "oxide-dark" : "oxide",
-                    content_css: mode === "dark" ? "dark" : "light",
+                    content_css: mode === "dark" ? "dark" : "oxide",
                   }}
                 />
               </FormControl>

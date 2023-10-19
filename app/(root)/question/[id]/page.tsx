@@ -71,7 +71,7 @@ const Page = async ({ params }: any) => {
       </div>
       <AllAnswers
         userId={JSON.stringify(mongoUser._id)}
-        questionId={JSON.stringify(result?.question._id)}
+        questionId={result?.question._id}
         totalAnswers={result?.question.answers.length}
       />
       <Answer

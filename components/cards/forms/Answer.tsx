@@ -29,6 +29,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       answer: "",
     },
   });
+
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true);
     try {
@@ -105,8 +106,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                         "bold italic forecolor | alignleft aligncenter " +
                         "alignright alignjustify | bullist numlist ",
                       content_style: "body { font-family:Inter; font-size:16px }",
-                      skin: mode === "dark" ? "oxide-dark" : "",
-                      content_css: mode === "dark" ? "oxide-dark" : "",
+                      skin: mode === "dark" ? "oxide-dark" : "oxide",
+                      content_css: mode === "dark" ? "oxide-dark" : "oxide",
                     }}
                   />
                 </FormControl>

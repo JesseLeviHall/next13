@@ -5,14 +5,13 @@ import { connectToDatabase } from "../mongoose";
 import { CreateAnswerParams, GetAnswersParams } from "./shared";
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
-import User from "@/database/user.model";
 
 export const createAnswer = async (params: CreateAnswerParams) => {
   try {
     connectToDatabase();
 
     const { author, question, content, path } = params;
-    const newAnswer = new Answer({
+    const newAnswer = await Answer.create({
       author,
       question,
       content,
@@ -32,9 +31,8 @@ export const getAnswers = async (params: GetAnswersParams) => {
   try {
     connectToDatabase();
     const { questionId } = params;
-    console.log(questionId, "questionId");
     const answers = await Answer.find({ question: questionId })
-      .populate({ path: "author", model: User, select: "_id clerkId name picture" })
+      .populate("author", "_id clerkId name picture")
       .sort({ createdAt: -1 });
     return { answers };
   } catch (error) {
