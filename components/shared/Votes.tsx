@@ -1,4 +1,5 @@
 "use client";
+import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import { downvoteQuestion, upvoteQuestion } from "@/lib/actions/question.action";
 import { abbreviateNumber } from "@/lib/utils";
 import Image from "next/image";
@@ -27,25 +28,37 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
     }
     if (action === "upvote" && type === "Question") {
       await upvoteQuestion({
-        questionId: JSON.parse(itemId),
-        userId: JSON.parse(userId),
+        questionId: itemId,
+        userId: `${userId}`,
         hasdownVoted,
         hasupVoted,
         path: pathname,
       });
     } else if (type === "Answer") {
-      /*  await upvoteAnswer({answerId: JSON.parse(itemId), userId: JSON.parse(userId), hasdownVoted, hasupVoted, path: pathname}) */
+      await upvoteAnswer({
+        answerId: itemId,
+        userId: `${userId}`,
+        hasdownVoted,
+        hasupVoted,
+        path: pathname,
+      });
     }
     if (action === "downvote" && type === "Question") {
       await downvoteQuestion({
-        questionId: JSON.parse(itemId),
-        userId: JSON.parse(userId),
+        questionId: itemId,
+        userId: `${userId}`,
         hasdownVoted,
         hasupVoted,
         path: pathname,
       });
     } else if (type === "Answer") {
-      /*  await downvoteAnswer({answerId: JSON.parse(itemId), userId: JSON.parse(userId), hasdownVoted, hasupVoted, path: pathname}) */
+      await downvoteAnswer({
+        answerId: itemId,
+        userId: `${userId}`,
+        hasdownVoted,
+        hasupVoted,
+        path: pathname,
+      });
     }
   };
 
@@ -58,7 +71,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
           <Image
-            src={hasupVoted ? "/public/assets/upvoted.svg" : "/public/assets/upvote.svg"}
+            src={hasupVoted ? "/assets/icons/upvoted.svg" : "/assets/icons/upvote.svg"}
             width={18}
             height={18}
             alt="upvote"
@@ -73,7 +86,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
         </div>
         <div className="flex-center gap-1.5">
           <Image
-            src={hasdownVoted ? "/public/assets/icons/downvoted.svg" : "/public/assets/downvote.svg"}
+            src={hasdownVoted ? "/assets/icons/downvoted.svg" : "/assets/icons/downvote.svg"}
             width={18}
             height={18}
             alt="downvote"
@@ -87,16 +100,18 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
           </div>
         </div>
       </div>
-      <Image
-        src={hasSaved ? "/public/assets/icons/star-filled.svg" : "/public/assets/icons/star-red.svg"}
-        width={18}
-        height={18}
-        alt="save"
-        className="cursor-pointer"
-        onClick={() => {
-          handleSave();
-        }}
-      />
+      {type === "Question" && (
+        <Image
+          src={hasSaved ? "/assets/icons/star-filled.svg" : "/assets/icons/star-red.svg"}
+          width={18}
+          height={18}
+          alt="save"
+          className="cursor-pointer"
+          onClick={() => {
+            handleSave();
+          }}
+        />
+      )}
     </div>
   );
 };

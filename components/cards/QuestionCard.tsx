@@ -55,7 +55,7 @@ const QuestionCard = ({ _id, title, tags, author, upvotes, answers, views, creat
           imgUrl="/assets/icons/message.svg"
           alt="message"
           value={abbreviateNumber(answers.length)}
-          title=" Answers"
+          title={answers.length > 1 || answers.length === 0 ? " Answers" : " Answer"}
           textStyels="small-medium text-dark400_light800"
         />
         <Metric

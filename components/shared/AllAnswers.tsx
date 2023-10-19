@@ -21,7 +21,9 @@ const AllAnswers = async ({ questionId, userId, totalAnswers }: Props) => {
   return (
     <div className="mt-11 ">
       <div className="flex items-center justify-between">
-        <h3 className="primary-text-gradient">{totalAnswers > 1 ? `${totalAnswers} Answers` : "1 Answer"} </h3>
+        <h3 className="primary-text-gradient">
+          {totalAnswers > 1 || totalAnswers === 0 ? `${totalAnswers} Answers` : "1 Answer"}{" "}
+        </h3>
         <Filter filters={AnswerFilters} />
       </div>
       <div>

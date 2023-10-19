@@ -63,7 +63,7 @@ const Page = async ({ params }: any) => {
           imgUrl="/assets/icons/message.svg"
           alt="message"
           value={abbreviateNumber(result?.question.answers.length)}
-          title=" Answers"
+          title={result?.question.answers.length > 1 || result?.question.answers.length === 0 ? " Answers" : " Answer"}
           textStyels="small-medium text-dark400_light800"
         />
         <Metric
@@ -82,7 +82,7 @@ const Page = async ({ params }: any) => {
         ))}
       </div>
       <AllAnswers
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         questionId={result?.question._id}
         totalAnswers={result?.question.answers.length}
       />
