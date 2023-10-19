@@ -46,14 +46,13 @@ const AllAnswers = async ({ questionId, userId, totalAnswers }: Props) => {
                 </Link>
                 <div className="flex justify-end">
                   <Votes
-                    userId={""}
-                    type="answer"
-                    itemId={""}
-                    upvotes={1}
-                    hasupVoted={true}
-                    downvotes={1}
-                    hasdownVoted={false}
-                    hasSaved={false}
+                    userId={userId}
+                    type="Answer"
+                    itemId={answer._id}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.upvotes.includes(userId)}
                   />
                 </div>
               </div>

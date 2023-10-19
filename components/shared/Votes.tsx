@@ -1,6 +1,8 @@
 "use client";
+import { downvoteQuestion, upvoteQuestion } from "@/lib/actions/question.action";
 import { abbreviateNumber } from "@/lib/utils";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -15,8 +17,36 @@ interface Props {
 }
 
 const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVoted, hasSaved }: Props) => {
+  const pathname = usePathname();
+  // const router = useRouter();
+
   const handleVote = async (action: string) => {
     console.log(action);
+    if (!userId) {
+      return;
+    }
+    if (action === "upvote" && type === "Question") {
+      await upvoteQuestion({
+        questionId: JSON.parse(itemId),
+        userId: JSON.parse(userId),
+        hasdownVoted,
+        hasupVoted,
+        path: pathname,
+      });
+    } else if (type === "Answer") {
+      /*  await upvoteAnswer({answerId: JSON.parse(itemId), userId: JSON.parse(userId), hasdownVoted, hasupVoted, path: pathname}) */
+    }
+    if (action === "downvote" && type === "Question") {
+      await downvoteQuestion({
+        questionId: JSON.parse(itemId),
+        userId: JSON.parse(userId),
+        hasdownVoted,
+        hasupVoted,
+        path: pathname,
+      });
+    } else if (type === "Answer") {
+      /*  await downvoteAnswer({answerId: JSON.parse(itemId), userId: JSON.parse(userId), hasdownVoted, hasupVoted, path: pathname}) */
+    }
   };
 
   const handleSave = async () => {
@@ -28,7 +58,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
           <Image
-            src={hasupVoted ? "/assets/icons/upvoted.svg" : "assets/icons/upvote.svg"}
+            src={hasupVoted ? "/public/assets/upvoted.svg" : "/public/assets/upvote.svg"}
             width={18}
             height={18}
             alt="upvote"
@@ -43,7 +73,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
         </div>
         <div className="flex-center gap-1.5">
           <Image
-            src={hasdownVoted ? "/assets/icons/downvoted.svg" : "assets/icons/downvote.svg"}
+            src={hasdownVoted ? "/public/assets/icons/downvoted.svg" : "/public/assets/downvote.svg"}
             width={18}
             height={18}
             alt="downvote"
@@ -58,7 +88,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
         </div>
       </div>
       <Image
-        src={hasSaved ? "/assets/icons/star-filled.svg" : "assets/icons/star-red.svg"}
+        src={hasSaved ? "/public/assets/icons/star-filled.svg" : "/public/assets/icons/star-red.svg"}
         width={18}
         height={18}
         alt="save"
