@@ -14,7 +14,7 @@ export const yourFunctionName = async (params: any) => {
     connectToDatabase();
     // function body
   } catch (error) {
-    // error handling
+    console.log(error); 
   }
 }
 */
@@ -61,6 +61,7 @@ export const getQuestionById = async (params: GetQuestionByIdParams) => {
   try {
     connectToDatabase();
     const { questionId } = params;
+
     const question = await Question.findById(questionId)
       .populate({ path: "tags", model: Tag, select: "_id name" })
       .populate({ path: "author", model: User, select: "_id clerkId name picture" });

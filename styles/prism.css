@@ -43,6 +43,11 @@ code[class*="language-"] ::selection {
   text-shadow: none;
 }
 
+/* .dark-mode code[class*="language-"],
+.dark-mode pre[class*="language-"] {
+  color: white;
+}
+ */
 pre[class*="language-"] {
   border: 1px solid #2a4555;
   border-radius: 5px;
