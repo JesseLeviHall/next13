@@ -30,6 +30,9 @@ export const getTimestamp = (createdAt: Date): string => {
 // ==================================================
 
 export const abbreviateNumber = (value: number): string => {
+  if (value === undefined) {
+    return "0";
+  }
   if (value >= 1000000) {
     return `${(value / 1000000).toFixed(1)}M`;
   }
