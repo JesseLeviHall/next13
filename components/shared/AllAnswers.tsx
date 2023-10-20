@@ -19,7 +19,7 @@ interface Props {
 const AllAnswers = async ({ questionId, userId, totalAnswers }: Props) => {
   const result = await getAnswers({ questionId });
   return (
-    <div className=" mx-auto mt-11  max-w-screen-sm sm:flex-row sm:items-center sm:overflow-x-auto  ">
+    <div className=" mt-11 ">
       <div className="flex items-center justify-between">
         <h3 className="primary-text-gradient">
           {totalAnswers > 1 || totalAnswers === 0 ? `${totalAnswers} Answers` : "1 Answer"}{" "}
