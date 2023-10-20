@@ -79,11 +79,12 @@ export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
   try {
     connectToDatabase();
     const { userId, questionId, path } = params;
+
     const user = await User.findById(userId);
     if (!user) {
       throw new Error("User not found");
     }
-    const isQuestionSaved = user.savedQuestions.includes(questionId);
+    const isQuestionSaved = user.saved.includes(questionId);
     if (isQuestionSaved) {
       await User.findByIdAndUpdate(userId, { $pull: { saved: questionId } }, { new: true });
     } else {
