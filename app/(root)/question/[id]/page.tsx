@@ -81,16 +81,18 @@ const Page = async ({ params }: any) => {
           <RenderTag key={tag._id} _id={tag._id} name={tag.name} showCount={false} />
         ))}
       </div>
-      <AllAnswers
-        userId={mongoUser._id}
-        questionId={result?.question._id}
-        totalAnswers={result?.question.answers.length}
-      />
-      <Answer
-        question={result?.question.content}
-        questionId={JSON.stringify(result?.question._id)}
-        authorId={JSON.stringify(mongoUser._id)}
-      />
+      <div className="container mx-auto">
+        <AllAnswers
+          userId={mongoUser._id}
+          questionId={result?.question._id}
+          totalAnswers={result?.question.answers.length}
+        />
+        <Answer
+          question={result?.question.content}
+          questionId={JSON.stringify(result?.question._id)}
+          authorId={JSON.stringify(mongoUser._id)}
+        />
+      </div>
     </>
   );
 };
