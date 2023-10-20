@@ -43,3 +43,12 @@ export const abbreviateNumber = (value: number): string => {
 
   return value.toString();
 };
+
+// ==================================================
+
+// function that takes javascript object date as a parameter and returns a joined date of month and year
+export const getJoinedDate = (date: Date): string => {
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+  return `${month} ${year}`;
+};
