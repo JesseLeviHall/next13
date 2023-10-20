@@ -1,6 +1,7 @@
 "use client";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import { downvoteQuestion, upvoteQuestion } from "@/lib/actions/question.action";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { abbreviateNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -22,48 +23,56 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
   // const router = useRouter();
 
   const handleVote = async (action: string) => {
-    console.log(action);
+    console.log(action, type, itemId, userId, hasdownVoted, hasupVoted);
     if (!userId) {
       return;
     }
-    if (action === "upvote" && type === "Question") {
-      await upvoteQuestion({
-        questionId: itemId,
-        userId: `${userId}`,
-        hasdownVoted,
-        hasupVoted,
-        path: pathname,
-      });
+
+    if (type === "Question") {
+      if (action === "upvote") {
+        await upvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasdownVoted,
+          hasupVoted,
+          path: pathname,
+        });
+      } else if (action === "downvote") {
+        await downvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasdownVoted,
+          hasupVoted,
+          path: pathname,
+        });
+      }
     } else if (type === "Answer") {
-      await upvoteAnswer({
-        answerId: itemId,
-        userId: `${userId}`,
-        hasdownVoted,
-        hasupVoted,
-        path: pathname,
-      });
-    }
-    if (action === "downvote" && type === "Question") {
-      await downvoteQuestion({
-        questionId: itemId,
-        userId: `${userId}`,
-        hasdownVoted,
-        hasupVoted,
-        path: pathname,
-      });
-    } else if (type === "Answer") {
-      await downvoteAnswer({
-        answerId: itemId,
-        userId: `${userId}`,
-        hasdownVoted,
-        hasupVoted,
-        path: pathname,
-      });
+      if (action === "upvote") {
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasdownVoted,
+          hasupVoted,
+          path: pathname,
+        });
+      } else if (action === "downvote") {
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasdownVoted,
+          hasupVoted,
+          path: pathname,
+        });
+      }
     }
   };
 
   const handleSave = async () => {
-    console.log("saved ");
+    await toggleSaveQuestion({
+      questionId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path: pathname,
+    });
   };
 
   return (

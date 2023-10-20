@@ -46,10 +46,16 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasupVoted) {
+      // remove upvote
       updateQuery = { $pull: { upvotes: userId } };
     } else if (hasdownVoted) {
-      updateQuery = { $pull: { downvotes: userId }, $push: { upvotes: userId } };
+      // switch vote
+      updateQuery = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
     } else {
+      // new upvote
       updateQuery = { $addToSet: { upvotes: userId } };
     }
     const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, { new: true });
@@ -69,10 +75,16 @@ export const downvoteAnswer = async (params: AnswerVoteParams) => {
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasdownVoted) {
-      updateQuery = { $pull: { downvote: userId } };
+      // remove downvote
+      updateQuery = { $pull: { downvotes: userId } };
     } else if (hasupVoted) {
-      updateQuery = { $pull: { upvotes: userId }, $push: { downvotes: userId } };
+      // switch vote
+      updateQuery = {
+        $pull: { upvotes: userId },
+        $push: { downvotes: userId },
+      };
     } else {
+      // new downvote
       updateQuery = { $addToSet: { downvotes: userId } };
     }
     const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, { new: true });
