@@ -9,6 +9,7 @@ import {
   GetAllUsersParams,
   GetSavedQuestionsParams,
   GetUserByIdParams,
+  GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared";
@@ -138,6 +139,38 @@ export const getUserInfo = async (params: GetUserByIdParams) => {
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
     return { user, totalQuestions, totalAnswers };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserQuestions = async (params: GetUserStatsParams) => {
+  try {
+    connectToDatabase();
+    const { userId, page } = params;
+    console.log(page);
+    const totalQuestions = await Question.countDocuments({ author: userId });
+    const userQuestions = await Question.find({ author: userId })
+      .sort({ views: -1, upvotes: -1 })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId name picture");
+    return { totalQuestions, questions: userQuestions };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserAnswers = async (params: GetUserStatsParams) => {
+  try {
+    connectToDatabase();
+    const { userId, page } = params;
+    console.log(page);
+    const totalAnswers = await Answer.countDocuments({ author: userId });
+    const userAnswers = await Answer.find({ author: userId })
+      .sort({ upvotes: -1 })
+      .populate("question", "_id title")
+      .populate("author", "_id clerkId name picture");
+    return { totalAnswers, answers: userAnswers };
   } catch (error) {
     console.log(error);
   }

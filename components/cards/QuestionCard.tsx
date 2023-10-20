@@ -5,6 +5,7 @@ import Metric from "../shared/Metric";
 import { getTimestamp, abbreviateNumber } from "@/lib/utils";
 
 interface QuestionProps {
+  clerkId?: string;
   _id: string;
   title: string;
   tags: { _id: string; name: string }[];
