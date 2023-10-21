@@ -9,11 +9,15 @@ import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/cards/QuestionCard";
 import { getQuestions } from "@/lib/actions/question.action";
 import { auth } from "@clerk/nextjs";
+import { SearchParamsProps } from "@/types";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   console.log(userId);
-  const { questions = [] } = (await getQuestions({})) ?? {};
+  const { questions = [] } =
+    (await getQuestions({
+      searchQuery: searchParams.q,
+    })) ?? {};
 
   return (
     <>
