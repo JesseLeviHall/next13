@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import Metric from "../shared/Metric";
 import { abbreviateNumber, getTimestamp } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
@@ -43,9 +42,9 @@ const AnswerCard = ({ clerkId, _id, question, author, upvotes, createdAt }: Prop
           imgUrl={author.picture}
           alt="user avatar"
           value={author.name}
-          title={` • asked ${getTimestamp(createdAt)}`}
+          title={` • answered ${getTimestamp(createdAt)}`}
           href={`/profile/${author.clerkId}`}
-          textStyles="body-medium text-dark400_light700"
+          textStyels="body-medium text-dark400_light700"
           isAuthor
         />
 
@@ -55,7 +54,7 @@ const AnswerCard = ({ clerkId, _id, question, author, upvotes, createdAt }: Prop
             alt="like icon"
             value={abbreviateNumber(upvotes)}
             title=" Votes"
-            textStyles="small-medium text-dark400_light800"
+            textStyels="body-medium text-dark400_light700"
           />
         </div>
       </div>
