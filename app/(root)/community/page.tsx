@@ -11,7 +11,6 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
   });
   return (
     <>
