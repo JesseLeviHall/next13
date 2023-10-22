@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import qs from "query-string";
+import { BadgeCounts } from "@/types";
+import { BADGE_CRITERIA } from "@/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -100,7 +102,7 @@ export const removeKeysFromQuery = ({ params, keysToRemove }: RemoveUrlQueryPara
 };
 
 // ==================================================
-/*
+
 interface BadgeParam {
   criteria: {
     type: keyof typeof BADGE_CRITERIA;
@@ -129,4 +131,4 @@ export const assignBadges = (params: BadgeParam) => {
   });
 
   return badgeCounts;
-}; */
+};
