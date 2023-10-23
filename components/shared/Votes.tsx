@@ -7,6 +7,7 @@ import { abbreviateNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   type: string;
@@ -26,7 +27,7 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
   const handleVote = async (action: string) => {
     console.log(action, type, itemId, userId, hasdownVoted, hasupVoted);
     if (!userId) {
-      return;
+      return toast({ title: "Please login to vote", description: "Must be logged in to perform this action" });
     }
 
     if (type === "Question") {
@@ -56,6 +57,10 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
           hasupVoted,
           path: pathname,
         });
+        return toast({
+          title: `Upvote ${!hasupVoted ? "Successful" : "Removed"}`,
+          variant: !hasupVoted ? "default" : "destructive",
+        });
       } else if (action === "downvote") {
         await downvoteAnswer({
           answerId: JSON.parse(itemId),
@@ -65,6 +70,10 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
           path: pathname,
         });
       }
+      return toast({
+        title: `Downvote ${!hasdownVoted ? "Successful" : "Removed"}`,
+        variant: !hasdownVoted ? "default" : "destructive",
+      });
     }
   };
 
@@ -73,6 +82,10 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
       questionId: JSON.parse(itemId),
       userId: JSON.parse(userId),
       path: pathname,
+    });
+    return toast({
+      title: `Question ${!hasSaved ? "Saved in" : "Removed from"} your collection`,
+      variant: !hasSaved ? "default" : "destructive",
     });
   };
 
