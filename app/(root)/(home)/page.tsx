@@ -7,7 +7,7 @@ import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionCard from "@/components/cards/QuestionCard";
-import { getQuestions } from "@/lib/actions/question.action";
+import { getQuestions, getRecommendedQuestions } from "@/lib/actions/question.action";
 import { auth } from "@clerk/nextjs";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
@@ -19,13 +19,25 @@ export const metadata: Metadata = {
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
-  console.log(userId);
-  const { questions = [], isNext } =
-    (await getQuestions({
+  let questionsData: any = {};
+
+  if (searchParams?.filter === "recommended") {
+    if (userId) {
+      questionsData = await getRecommendedQuestions({
+        userId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+      });
+    }
+  } else {
+    questionsData = await getQuestions({
       searchQuery: searchParams.q,
       filter: searchParams.filter,
       page: searchParams.page ? +searchParams.page : 1,
-    })) ?? {};
+    });
+  }
+
+  const { questions = [], isNext } = questionsData ?? {};
 
   return (
     <>
