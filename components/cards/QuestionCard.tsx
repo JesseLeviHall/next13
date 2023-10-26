@@ -50,27 +50,29 @@ const QuestionCard = ({ clerkId, _id, title, tags, author, upvotes, answers, vie
           isAuthor
           textStyels="body-medium text-dark400_light700"
         />
-        <Metric
-          imgUrl="/assets/icons/like.svg"
-          alt="Upvotes"
-          value={abbreviateNumber(upvotes)}
-          title=" Votes"
-          textStyels="body-medium text-dark400_light800"
-        />
-        <Metric
-          imgUrl="/assets/icons/message.svg"
-          alt="message"
-          value={abbreviateNumber(answers.length)}
-          title={answers.length > 1 || answers.length === 0 ? " Answers" : " Answer"}
-          textStyels="body-medium text-dark400_light800"
-        />
-        <Metric
-          imgUrl="/assets/icons/eye.svg"
-          alt="eye"
-          value={abbreviateNumber(views)}
-          title=" Views"
-          textStyels="body-medium text-dark400_light800"
-        />
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            imgUrl="/assets/icons/like.svg"
+            alt="Upvotes"
+            value={abbreviateNumber(upvotes)}
+            title=" Votes"
+            textStyels="body-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/assets/icons/message.svg"
+            alt="message"
+            value={abbreviateNumber(answers.length)}
+            title={answers.length > 1 || answers.length === 0 ? " Answers" : " Answer"}
+            textStyels="body-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/assets/icons/eye.svg"
+            alt="eye"
+            value={abbreviateNumber(views)}
+            title=" Views"
+            textStyels="body-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
   );

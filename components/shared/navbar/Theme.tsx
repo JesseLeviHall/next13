@@ -17,7 +17,7 @@ const Theme = () => {
             <Image src="/assets/icons/moon.svg" alt="dark mode" width={20} height={20} className="active-theme" />
           )}
         </MenubarTrigger>
-        <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
+        <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] rounded border bg-primary-500 p-1 dark:border-dark-400 dark:bg-dark-300">
           {themes.map((item) => (
             <MenubarItem
               className=" flex items-center gap-4 bg-light-900 px-2.5 py-2 focus:bg-light-700 dark:bg-dark-200 dark:focus:bg-dark-400 "
