@@ -8,7 +8,7 @@ import Question from "@/database/question.model";
 import { FilterQuery } from "mongoose";
 import Interaction from "@/database/interaction.model";
 
-export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
+export async function getTopIneractedTags(params: GetTopInteractedTagsParams) {
   try {
     await connectToDatabase();
     const { userId, limit = 3 } = params;
