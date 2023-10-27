@@ -1,4 +1,4 @@
-/* import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
   skipJwksCache: true,
@@ -10,7 +10,3 @@ export default authMiddleware({
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
- */
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default function () {}
