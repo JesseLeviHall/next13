@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
+  if (!userId) console.warn("User not logged in");
+  if (userId) console.log("User logged in");
   let questionsData: any = {};
 
   if (searchParams?.filter === "recommended") {
