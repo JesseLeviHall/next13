@@ -32,7 +32,7 @@ export const yourFunctionName = async (params: any) => {
 
 export const createQuestion = async (params: CreateQuestionParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { title, content, tags, author, path } = params;
     const question = await Question.create({
       title,
@@ -67,7 +67,7 @@ export const createQuestion = async (params: CreateQuestionParams) => {
 
 export const getQuestions = async (params: GetQuestionsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { searchQuery, filter, page = 1, pageSize = 10 } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Question> = {};
@@ -111,7 +111,7 @@ export const getQuestions = async (params: GetQuestionsParams) => {
 
 export const getQuestionById = async (params: GetQuestionByIdParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId } = params;
 
     const question = await Question.findById(questionId)
@@ -125,7 +125,7 @@ export const getQuestionById = async (params: GetQuestionByIdParams) => {
 
 export const upvoteQuestion = async (params: QuestionVoteParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasupVoted) {
@@ -158,7 +158,7 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
 
 export const downvoteQuestion = async (params: QuestionVoteParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasdownVoted) {
@@ -188,7 +188,7 @@ export const downvoteQuestion = async (params: QuestionVoteParams) => {
 
 export const deleteQuestion = async (params: DeleteQuestionParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId, path } = params;
 
@@ -205,7 +205,7 @@ export const deleteQuestion = async (params: DeleteQuestionParams) => {
 
 export const editQuestion = async (params: EditQuestionParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, title, content, path } = params;
     const question = await Question.findById(questionId).populate("tags");
     if (!question) {
@@ -233,7 +233,7 @@ export const getHotQuestions = async () => {
 
 export async function getRecommendedQuestions(params: RecommendedParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, page = 1, pageSize = 20, searchQuery } = params;
 

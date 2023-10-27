@@ -22,7 +22,7 @@ import { assignBadges } from "../utils";
 
 export const getUserById = async (params: any) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId } = params;
     const user = await User.findOne({ clerkId: userId });
     return user;
@@ -33,7 +33,7 @@ export const getUserById = async (params: any) => {
 
 export const createUser = async (userData: CreateUserParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const newUser = await User.create(userData);
     return newUser;
   } catch (error) {
@@ -43,7 +43,7 @@ export const createUser = async (userData: CreateUserParams) => {
 
 export const updateUser = async (params: UpdateUserParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { clerkId, updateData, path } = params;
     await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
     revalidatePath(path);
@@ -54,7 +54,7 @@ export const updateUser = async (params: UpdateUserParams) => {
 
 export const deleteUser = async (params: DeleteUserParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { clerkId } = params;
     const user = await User.findById({ clerkId });
     if (!user) {
@@ -73,7 +73,7 @@ export const deleteUser = async (params: DeleteUserParams) => {
 
 export const getAllUsers = async (params: GetAllUsersParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { searchQuery, filter, page = 1, pageSize = 5 } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof User> = {};
@@ -112,7 +112,7 @@ export const getAllUsers = async (params: GetAllUsersParams) => {
 
 export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId, questionId, path } = params;
 
     const user = await User.findById(userId);
@@ -133,7 +133,7 @@ export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
 
 export const getSavedQuestions = async (params: GetSavedQuestionsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { clerkId, searchQuery, filter, page = 1, pageSize = 5 } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Question> = searchQuery ? { title: { $regex: new RegExp(searchQuery, "i") } } : {};
@@ -187,7 +187,7 @@ export const getSavedQuestions = async (params: GetSavedQuestionsParams) => {
 
 export const getUserInfo = async (params: GetUserByIdParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId } = params;
     const user = await User.findOne({ clerkId: userId });
     if (!user) {
@@ -261,7 +261,7 @@ export const getUserInfo = async (params: GetUserByIdParams) => {
 
 export const getUserQuestions = async (params: GetUserStatsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId, page = 1, pageSize = 5 } = params;
     const skipAmount = (page - 1) * pageSize;
     const totalQuestions = await Question.countDocuments({ author: userId });
@@ -282,7 +282,7 @@ export const getUserQuestions = async (params: GetUserStatsParams) => {
 
 export const getUserAnswers = async (params: GetUserStatsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId, page = 1, pageSize = 5 } = params;
     const skipAmount = (page - 1) * pageSize;
     const totalAnswers = await Answer.countDocuments({ author: userId });

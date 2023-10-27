@@ -42,7 +42,7 @@ export const createAnswer = async (params: CreateAnswerParams) => {
 
 export const getAnswers = async (params: GetAnswersParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, sortBy, page = 1, pageSize = 3 } = params;
     const skipAmount = (page - 1) * pageSize;
     let sortOptions = {};
@@ -83,7 +83,7 @@ export const getAnswers = async (params: GetAnswersParams) => {
 
 export const upvoteAnswer = async (params: AnswerVoteParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasupVoted) {
@@ -119,7 +119,7 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
 
 export const downvoteAnswer = async (params: AnswerVoteParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasdownVoted) {
@@ -155,7 +155,7 @@ export const downvoteAnswer = async (params: AnswerVoteParams) => {
 
 export const deleteAnswer = async (params: DeleteAnswerParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { answerId, path } = params;
 

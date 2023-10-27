@@ -9,7 +9,7 @@ import { FilterQuery } from "mongoose";
 
 export const getTopIneractedTags = async (params: GetTopInteractedTagsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId, limit = 3 } = params;
     const user = await User.findById(userId);
     if (!user) {
@@ -29,7 +29,7 @@ export const getTopIneractedTags = async (params: GetTopInteractedTagsParams) =>
 
 export const getAllTags = async (params: GetAllTagsParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { searchQuery, filter, page = 1, pageSize = 20 } = params;
     const skipAmount = (page - 1) * pageSize;
     const query: FilterQuery<typeof Tag> = {};
@@ -69,7 +69,7 @@ export const getAllTags = async (params: GetAllTagsParams) => {
 
 export const getQuestionsByTagId = async (params: GetQuestionsByTagIdParams) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { tagId, searchQuery, page = 1, pageSize = 5 } = params;
     const skipAmount = (page - 1) * pageSize;
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
@@ -100,7 +100,7 @@ export const getQuestionsByTagId = async (params: GetQuestionsByTagIdParams) => 
 
 export const getTopPopularTags = async () => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const popularTags = await Tag.aggregate([
       { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
       { $sort: { numberOfQuestions: -1 } },
