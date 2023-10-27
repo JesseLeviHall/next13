@@ -6,8 +6,9 @@ import { GetAllTagsParams, GetQuestionsByTagIdParams, GetTopInteractedTagsParams
 import User from "@/database/user.model";
 import Question from "@/database/question.model";
 import { FilterQuery } from "mongoose";
+import Interaction from "@/database/interaction.model";
 
-export const getTopIneractedTags = async (params: GetTopInteractedTagsParams) => {
+export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
     await connectToDatabase();
     const { userId, limit = 3 } = params;
@@ -15,17 +16,21 @@ export const getTopIneractedTags = async (params: GetTopInteractedTagsParams) =>
     if (!user) {
       throw new Error("User not found");
     }
-    // TODO: Iteractions
-    console.log(limit);
-    return [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
-      { _id: "3", name: "tag3" },
-    ];
+    const tagCountMap = await Interaction.aggregate([
+      { $match: { user: user._id, tags: { $exists: true, $ne: [] } } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: limit },
+    ]);
+    const topTags = tagCountMap.map((tagCount) => tagCount._id);
+    const topTagDocuments = await Tag.find({ _id: { $in: topTags } });
+    return topTagDocuments;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching top interacted tags:", error);
+    throw error;
   }
-};
+}
 
 export const getAllTags = async (params: GetAllTagsParams) => {
   try {
