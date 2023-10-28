@@ -25,7 +25,6 @@ const Votes = ({ type, userId, itemId, upvotes, hasupVoted, downvotes, hasdownVo
   const router = useRouter();
 
   const handleVote = async (action: string) => {
-    console.log(action, type, itemId, userId, hasdownVoted, hasupVoted);
     if (!userId) {
       return toast({ title: "Please login to vote", description: "Must be logged in to perform this action" });
     }

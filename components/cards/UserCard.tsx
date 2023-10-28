@@ -28,11 +28,11 @@ const UserCard = async ({ user }: Props) => {
             <p className="body-regular text-dark500_light500 mt-2">@{user.username}</p>
           </h3>
         </div>
-        <div className="mt-5 flex w-full flex-col items-center px-3 ">
+        <div className="mt-5 flex w-full flex-col items-center ">
           {
             // @ts-ignore
             interactedTags.length > 0 ? (
-              <div className=" flex items-center gap-2 px-2">
+              <div className=" flex items-center gap-1 px-2">
                 {
                   // @ts-ignore
                   interactedTags.map((tag) => (
