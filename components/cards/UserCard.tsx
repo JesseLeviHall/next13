@@ -28,7 +28,7 @@ const UserCard = async ({ user }: Props) => {
             <p className="body-regular text-dark500_light500 mt-2">@{user.username}</p>
           </h3>
         </div>
-        <div className="mt-5 ">
+        <div className="mt-5 flex w-full flex-col items-center px-3 ">
           {
             // @ts-ignore
             interactedTags.length > 0 ? (
@@ -41,7 +41,7 @@ const UserCard = async ({ user }: Props) => {
                 }
               </div>
             ) : (
-              <Badge>No Tags Yet</Badge>
+              <Badge className="border border-blue-600 text-blue-300">No Tags Yet</Badge>
             )
           }
         </div>
