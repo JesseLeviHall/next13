@@ -32,7 +32,7 @@ const UserCard = async ({ user }: Props) => {
           {
             // @ts-ignore
             interactedTags.length > 0 ? (
-              <div className="flex items-center gap-2">
+              <div className=" flex items-center gap-2 px-2">
                 {
                   // @ts-ignore
                   interactedTags.map((tag) => (
