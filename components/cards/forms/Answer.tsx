@@ -56,11 +56,19 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     if (!authorId) return;
     setIsSubmittingAI(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`, {
+      const timeout = new Promise((_resolve, reject) =>
+        setTimeout(() => reject(new Error("Request took too long!")), 40000)
+      );
+
+      const fetchResponse = fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`, {
         method: "POST",
         body: JSON.stringify({ question }),
       });
 
+      const response = await Promise.race([fetchResponse, timeout]);
+      // @ts-ignore
+      if (!response.ok) throw new Error("Failed to fetch AI answer.");
+      // @ts-ignore
       const aiAnswer = await response.json();
 
       const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
